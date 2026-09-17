@@ -1,4 +1,81 @@
 const body = document.body;
+const main = document.querySelector('main');
+const navigation = document.querySelector('nav');
+const hero = document.querySelector('.hero');
+if (hero && !hero.querySelector('.hero-canvas')) {
+  const canvas = document.createElement('canvas');
+  canvas.className = 'hero-canvas';
+  canvas.setAttribute('aria-hidden', 'true');
+  hero.prepend(canvas);
+  const context = canvas.getContext('2d');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pointer = { x: .5, y: .5 };
+  let particles = [];
+  let frame = 0;
+  const resize = () => {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = hero.clientWidth * ratio;
+    canvas.height = hero.clientHeight * ratio;
+    canvas.style.width = `${hero.clientWidth}px`;
+    canvas.style.height = `${hero.clientHeight}px`;
+    context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const columns = Math.ceil(hero.clientWidth / 82) + 1;
+    const rows = Math.ceil(hero.clientHeight / 82) + 1;
+    particles = Array.from({ length: columns * rows }, (_, index) => ({
+      x: (index % columns) * 82 - 20,
+      y: Math.floor(index / columns) * 82 - 20,
+      phase: Math.random() * Math.PI * 2
+    }));
+  };
+  const draw = (time = 0) => {
+    const width = hero.clientWidth;
+    const height = hero.clientHeight;
+    context.clearRect(0, 0, width, height);
+    particles.forEach((particle) => {
+      const drift = reducedMotion.matches ? 0 : Math.sin(time * .00045 + particle.phase) * 8;
+      const x = particle.x + (pointer.x - .5) * 18 + drift;
+      const y = particle.y + (pointer.y - .5) * 18 + Math.cos(time * .00035 + particle.phase) * 8;
+      context.fillStyle = particle.phase % 3 > 1.8 ? 'rgba(223,99,65,.48)' : 'rgba(38,38,38,.18)';
+      context.fillRect(x, y, 2, 2);
+      context.beginPath();
+      context.strokeStyle = 'rgba(38,38,38,.08)';
+      context.moveTo(x, y);
+      context.lineTo(x + 82, y);
+      context.stroke();
+    });
+    if (!reducedMotion.matches) frame = requestAnimationFrame(draw);
+  };
+  hero.addEventListener('pointermove', (event) => {
+    const bounds = hero.getBoundingClientRect();
+    pointer.x = (event.clientX - bounds.left) / bounds.width;
+    pointer.y = (event.clientY - bounds.top) / bounds.height;
+  }, { passive: true });
+  window.addEventListener('resize', resize, { passive: true });
+  reducedMotion.addEventListener?.('change', () => {
+    cancelAnimationFrame(frame);
+    draw();
+  });
+  resize();
+  draw();
+}
+if (navigation) navigation.setAttribute('aria-label', '主要导航');
+document.querySelectorAll('button').forEach(button => button.type = 'button');
+const modelViewer = document.querySelector('.hero-model-placeholder model-viewer');
+const modelMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+if (modelViewer && modelMotion.matches) modelViewer.removeAttribute('auto-rotate');
+modelMotion.addEventListener?.('change', (event) => {
+  if (!modelViewer) return;
+  if (event.matches) modelViewer.removeAttribute('auto-rotate');
+  else modelViewer.setAttribute('auto-rotate', '');
+});
+if (main && !document.querySelector('.skip-link')) {
+  const skipLink = document.createElement('a');
+  skipLink.className = 'skip-link';
+  skipLink.href = '#main-content';
+  skipLink.textContent = '跳到主内容';
+  main.id = 'main-content';
+  main.prepend(skipLink);
+}
 const languageButton = document.querySelector('#lang-toggle');
 let language = 'zh';
 const data = {
@@ -31,8 +108,94 @@ function applyLanguage() {
   ['.edu-grid > div:first-child h3:nth-of-type(1)', '.edu-grid > div:first-child p:nth-of-type(1)', '.edu-grid > div:first-child small:nth-of-type(1)', '.edu-grid > div:first-child h3:nth-of-type(2)', '.edu-grid > div:first-child p:nth-of-type(2)', '.edu-grid > div:first-child small:nth-of-type(2)'].forEach((selector, index) => setText(selector, t.edu[index])); document.querySelectorAll('.awards li').forEach((node, index) => { node.lastChild.textContent = language === 'en' ? englishAwards[index] : chineseAwards[index]; }); const contactTitle = t.contact[0].split('\n'); document.querySelector('.contact h2').innerHTML = `${contactTitle[0]}<br><em>${contactTitle[1]}</em>`; setText('#copy span', t.contact[1]); setText('.contact footer a', t.contact[2]); languageButton.textContent = language === 'zh' ? 'EN' : '中';
 }
 languageButton.addEventListener('click', () => { language = language === 'zh' ? 'en' : 'zh'; applyLanguage(); renderPortfolio(); });
-document.querySelectorAll('.portfolio-tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.portfolio-tabs button').forEach(item => item.classList.remove('active')); tab.classList.add('active'); renderPortfolio(); }));
+document.querySelectorAll('.portfolio-tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.portfolio-tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); renderPortfolio(); }));
 renderPortfolio();
 document.querySelector('#theme').addEventListener('click', () => { body.classList.toggle('dark'); document.querySelector('#theme').textContent = body.classList.contains('dark') ? '☼' : '◐'; }); document.querySelector('#print').addEventListener('click', () => window.print());
 const toast = document.querySelector('.toast'); document.querySelector('#copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText('2578157551@qq.com'); } catch { const helper = document.createElement('textarea'); helper.value = '2578157551@qq.com'; helper.style.position = 'fixed'; helper.style.opacity = '0'; document.body.appendChild(helper); helper.select(); document.execCommand('copy'); helper.remove(); } toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800); });
-document.querySelectorAll('.plus').forEach(button => { const article = button.closest('article'); const detail = article.querySelector('.detail'); detail.hidden = true; button.setAttribute('aria-expanded', 'false'); button.addEventListener('click', () => { const open = article.classList.toggle('open'); detail.hidden = !open; button.setAttribute('aria-expanded', open); button.setAttribute('aria-label', open ? '收起详情' : '展开详情'); }); }); document.querySelectorAll('.experience .tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.experience .tabs button').forEach(item => item.classList.remove('active')); tab.classList.add('active'); const filter = tab.dataset.filter; document.querySelectorAll('.timeline article').forEach(item => item.classList.toggle('hidden', filter !== 'all' && item.dataset.type !== filter)); }));
+document.querySelectorAll('.plus').forEach(button => { const article = button.closest('article'); const detail = article.querySelector('.detail'); detail.hidden = true; button.setAttribute('aria-expanded', 'false'); button.addEventListener('click', () => { const open = article.classList.toggle('open'); detail.hidden = !open; button.setAttribute('aria-expanded', open); button.setAttribute('aria-label', open ? '收起详情' : '展开详情'); button.textContent = open ? '−' : '+'; }); }); document.querySelectorAll('.experience .tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.experience .tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); const filter = tab.dataset.filter; document.querySelectorAll('.timeline article').forEach(item => item.classList.toggle('hidden', filter !== 'all' && item.dataset.type !== filter)); }));
+
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: .14, rootMargin: '0px 0px -8% 0px' });
+const observeRevealNodes = () => {
+  document.querySelectorAll('.divider, .contact, .timeline article, .cap-list > div, .portfolio-card, .edu-grid > div').forEach((node) => {
+    if (!node.dataset.revealBound) {
+      node.dataset.revealBound = 'true';
+      revealObserver.observe(node);
+    }
+  });
+};
+observeRevealNodes();
+const portfolioObserver = new MutationObserver(observeRevealNodes);
+const portfolioGrid = document.querySelector('#portfolio-grid');
+if (portfolioGrid) portfolioObserver.observe(portfolioGrid, { childList: true });
+
+const progressBar = document.createElement('div');
+progressBar.className = 'scroll-progress';
+progressBar.setAttribute('aria-hidden', 'true');
+document.body.append(progressBar);
+const updateScrollState = () => {
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+  progressBar.style.setProperty('--scroll-progress', `${progress * 100}%`);
+  document.querySelector('header')?.classList.toggle('is-scrolled', window.scrollY > 24);
+};
+window.addEventListener('scroll', updateScrollState, { passive: true });
+updateScrollState();
+
+const sectionLinks = [...document.querySelectorAll('nav a')];
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    sectionLinks.forEach((link) => link.classList.toggle('is-current', link.hash === `#${entry.target.id}`));
+  });
+}, { rootMargin: '-42% 0px -48% 0px', threshold: 0 });
+document.querySelectorAll('main section[id]').forEach((section) => sectionObserver.observe(section));
+
+const visual = document.querySelector('.visual');
+if (visual && !motionPreference.matches && window.matchMedia('(pointer: fine)').matches) {
+  visual.addEventListener('pointermove', (event) => {
+    const bounds = visual.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
+    const y = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
+    visual.style.setProperty('--visual-x', `${x * 10}px`);
+    visual.style.setProperty('--visual-y', `${y * 10}px`);
+    if (modelViewer?.loaded) {
+      modelViewer.removeAttribute('auto-rotate');
+      const yaw = x * 14;
+      const pitch = 75 - y * 10;
+      modelViewer.cameraOrbit = `${yaw.toFixed(2)}deg ${pitch.toFixed(2)}deg auto`;
+    }
+  }, { passive: true });
+  visual.addEventListener('pointerleave', () => {
+    visual.style.setProperty('--visual-x', '0px');
+    visual.style.setProperty('--visual-y', '0px');
+    if (modelViewer?.loaded) {
+      modelViewer.cameraOrbit = '0deg 75deg auto';
+      if (!modelMotion.matches) modelViewer.setAttribute('auto-rotate', '');
+    }
+  }, { passive: true });
+}
+
+const animateMetrics = (node) => {
+  if (node.dataset.metricAnimated) return;
+  node.dataset.metricAnimated = 'true';
+  node.classList.add('metric-active');
+};
+const metricObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      animateMetrics(entry.target);
+      metricObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: .45 });
+document.querySelectorAll('.stats > div, .hero-proof > div').forEach((metric) => metricObserver.observe(metric));
+
+requestAnimationFrame(() => document.body.classList.add('page-ready'));
