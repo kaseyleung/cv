@@ -183,6 +183,30 @@ if (visual && !motionPreference.matches && window.matchMedia('(pointer: fine)').
   }, { passive: true });
 }
 
+const capabilityFeature = document.querySelector('.cap-feature');
+const capabilityModel = capabilityFeature?.querySelector('model-viewer');
+if (capabilityFeature && capabilityModel && !motionPreference.matches && window.matchMedia('(pointer: fine)').matches) {
+  capabilityFeature.addEventListener('pointermove', (event) => {
+    const bounds = capabilityFeature.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - .5) * 2;
+    const y = ((event.clientY - bounds.top) / bounds.height - .5) * 2;
+    capabilityModel.style.setProperty('--cap-model-x', `${x * 12}px`);
+    capabilityModel.style.setProperty('--cap-model-y', `${y * 12}px`);
+    if (capabilityModel.loaded) {
+      capabilityModel.removeAttribute('auto-rotate');
+      capabilityModel.cameraOrbit = `${(x * 18).toFixed(2)}deg ${(75 - y * 12).toFixed(2)}deg auto`;
+    }
+  }, { passive: true });
+  capabilityFeature.addEventListener('pointerleave', () => {
+    capabilityModel.style.setProperty('--cap-model-x', '0px');
+    capabilityModel.style.setProperty('--cap-model-y', '0px');
+    if (capabilityModel.loaded) {
+      capabilityModel.cameraOrbit = '0deg 75deg auto';
+      if (!modelMotion.matches) capabilityModel.setAttribute('auto-rotate', '');
+    }
+  }, { passive: true });
+}
+
 const animateMetrics = (node) => {
   if (node.dataset.metricAnimated) return;
   node.dataset.metricAnimated = 'true';
