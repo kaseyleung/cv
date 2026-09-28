@@ -71,10 +71,11 @@ modelMotion.addEventListener?.('change', (event) => {
 if (main && !document.querySelector('.skip-link')) {
   const skipLink = document.createElement('a');
   skipLink.className = 'skip-link';
-  skipLink.href = '#main-content';
+  skipLink.href = `#${main.id || 'main-content'}`;
   skipLink.textContent = '跳到主内容';
-  main.id = 'main-content';
-  main.prepend(skipLink);
+  if (!main.id) main.id = 'main-content';
+  main.tabIndex = -1;
+  document.body.prepend(skipLink);
 }
 const languageButton = document.querySelector('#lang-toggle');
 let language = 'zh';
