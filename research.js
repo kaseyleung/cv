@@ -32,7 +32,7 @@ controls.minDistance = 4.2;
 controls.maxDistance = 13;
 controls.minPolarAngle = 0.45;
 controls.maxPolarAngle = Math.PI * 0.48;
-controls.autoRotate = !reducedMotion.matches;
+controls.autoRotate = false;
 controls.autoRotateSpeed = 0.32;
 controls.target.set(0, 1, 0);
 controls.update();
@@ -270,7 +270,7 @@ window.addEventListener('resize', resize, { passive: true });
 const clock = new THREE.Clock();
 const animate = () => {
   const elapsed = clock.getElapsedTime();
-  stageGroup.rotation.y = Math.sin(elapsed * 0.16) * 0.018;
+  stageGroup.rotation.y = reducedMotion.matches ? 0 : Math.sin(elapsed * 0.16) * 0.018;
   camera.position.lerp(desiredPosition, 0.045);
   controls.target.lerp(desiredTarget, 0.045);
   controls.update();

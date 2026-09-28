@@ -60,6 +60,19 @@ if (hero && !hero.querySelector('.hero-canvas')) {
 }
 if (navigation) navigation.setAttribute('aria-label', '主要导航');
 document.querySelectorAll('button').forEach(button => button.type = 'button');
+const filterGroups = [
+  { node: document.querySelector('.experience .tabs'), label: ['筛选经历', 'Filter experience'] },
+  { node: document.querySelector('.portfolio-tabs'), label: ['筛选作品集', 'Filter portfolio'] }
+].filter(group => group.node);
+filterGroups.forEach(({ node, label }) => {
+  node.setAttribute('role', 'group');
+  node.setAttribute('aria-label', label[0]);
+  node.querySelectorAll('button').forEach(button => {
+    button.removeAttribute('role');
+    button.removeAttribute('aria-selected');
+    button.setAttribute('aria-pressed', String(button.classList.contains('active')));
+  });
+});
 const modelViewer = document.querySelector('.hero-model-placeholder model-viewer');
 const modelMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 if (modelViewer && modelMotion.matches) modelViewer.removeAttribute('auto-rotate');
@@ -78,6 +91,7 @@ if (main && !document.querySelector('.skip-link')) {
   document.body.prepend(skipLink);
 }
 const languageButton = document.querySelector('#lang-toggle');
+const themeButton = document.querySelector('#theme');
 let language = 'zh';
 const data = {
   zh: { nav: ['简介', '经历', '能力'], button: '下载 CV ↗', hero: ['把复杂信息，变成', '值得被看见的表达。', '跨越艺术现场\n与商业现场', '艺术科技 × 商业 × 媒体', 'Scroll to explore　↓'], profile: ['复合型\n表达者。', '现就读于香港岭南大学艺术科技与商业理学硕士，系统接触数字艺术、文化产业管理、艺术金融与商业创新。', '从专业出镜、声音表达，到电商直播与内容运营，我擅长将专业信息转译成高传播力叙事，再让叙事产生可衡量的商业结果。', ['单月直播 GMV / HKD', '活动参会者满意度', '口才课程授课课时', '内容点击率提升']], exp: { tabs: ['全部', '工作', '项目'], roles: ['电商运营 / 直播主播', '活动主持人', '出镜模特 / 商业口播', '摄制部副部长', '实习记者'], places: ['佛山 · 高端家电全品类', '广州 · 秋季投资策略报告会', '武汉 / 广州 · 湖北电视台、光谷泛悦城等', '武汉 · 校园官方媒体', '广东 · 新闻采编与新媒体转化'], details: ['深度调研产品与高净值客群需求，设计差异化讲解逻辑；推动单月 GMV 突破 50 万港元，单场转化率提升 15%–20%，搭建可复制的运营方法论。', '独立主持大型投资策略报告会，统筹策划到执行全流程；拆解复杂金融信息，会议获 95% 参会者满意度。', '完成宣传片出镜与商业口播，优化表达与呈现策略，助力合作项目传播效果提升 30%。', '运营校园官方新媒体账号，内容点击率提升 35%；48 小时响应热搜，单篇转发破 5000+。', '参与采编、文稿、后期剪辑及新媒体转化全流程，带动媒体账号单日涨粉 15%。'] }, cap: ['我如何\n创造价值。', '从洞察到表达，再从表达回到数据。', ['艺术科技', '商业运营', '媒体传播', '语言与工具'], ['数字策展 · 互动媒体 · 文化创新\nNFT 与数字艺术 · 艺术市场分析', '电商运营 · 品牌叙事 · 内容商业化\n数据驱动策略 · 用户增长', '直播带货 · 出镜主持 · 配音旁白\n脚本撰写 · 视频制作 · 多平台运营', '粤语（母语） · 普通话（一级乙等）\n英语（IELTS 6.0） · Premiere · AU · Canva · Figma · Photopea']], edu: ['艺术科技与商业硕士', '香港岭南大学 · 2026.09 — 2027.11（预计）', '艺术金融与科技、互动艺术与科技、文化市场营销、数字策展、创意经济', '播音与主持艺术学士', '武汉传媒学院 · 2021.09 — 2025.06', 'GPA 3.8 / 4.0 · 专业前 5% · 每学年校级奖学金'], contact: ['让下一段经历\n从一句你好开始。', '复制邮箱 ↗', '回到顶部 ↑'] },
@@ -85,6 +99,10 @@ const data = {
 };
 function setText(selector, text) { const node = document.querySelector(selector); if (node) node.textContent = text; }
 data.zh.nav = ['简介', '经历', '作品集', '能力']; data.en.nav = ['Profile', 'Experience', 'Portfolio', 'Capabilities'];
+data.zh.button = '打印 / 保存 CV ↗'; data.en.button = 'Print / Save CV ↗';
+setText('#print', data.zh.button);
+const portfolioIndex = document.querySelector('.portfolio .index');
+if (portfolioIndex?.firstChild) portfolioIndex.firstChild.textContent = '06 ';
 const portfolioData = [
   { type: 'commercial', year: '2022 — 2026', color: 'ink', zh: { tag: '商业｜政府｜艺术策展', title: '活动主持', summary: '独立统筹各种大型主持活动，覆盖政府、企业、商业与艺术策展现场。', metric: '全案', metricLabel: '策划 · 文稿 · 控场', detail: '可独立完成全案策划、文稿撰写与现场控场，擅长多方协调与临场应变，以专业表达输出价值，提升品牌影响力。' }, en: { tag: 'COMMERCIAL | GOVERNMENT | ARTS', title: 'Event Hosting & MC', summary: 'Independently coordinating large-scale events across government, business, commercial, and arts contexts.', metric: '360°', metricLabel: 'planning to stage', detail: 'Handling end-to-end planning, scripts, stakeholder coordination, and live-room control with agility and professional value that strengthens brand impact.' } },
   { type: 'commercial', year: '2025', color: 'coral', zh: { tag: '商业运营', title: 'COLMO 高端家电直播增长', summary: '把复杂产品参数转化为高净值客群听得懂、愿意行动的购买叙事。', metric: 'HK$500K+', metricLabel: '单月 GMV', detail: '从客群洞察、脚本设计到直播复盘建立可复制的方法论，单场转化率提升 15%–20%。' }, en: { tag: 'COMMERCIAL', title: 'COLMO Livestream Growth', summary: 'Turning complex product specifications into a purchase narrative for high-value audiences.', metric: 'HK$500K+', metricLabel: 'monthly GMV', detail: 'Built a repeatable framework from audience insight and scripting to live-session reviews, lifting conversion by 15%–20%.' } },
@@ -102,6 +120,10 @@ const englishAwards = ['Excellence Award, National College Student Advertising A
 const chineseAwards = Array.from(document.querySelectorAll('.awards li')).map(node => node.lastChild.textContent);
 function applyLanguage() {
   const t = data[language]; document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'; document.title = language === 'zh' ? 'Kasey 梁幸琪 · Interactive CV' : 'Kasey Liang · Interactive CV';
+  navigation?.setAttribute('aria-label', language === 'zh' ? '主要导航' : 'Main navigation');
+  themeButton?.setAttribute('aria-label', language === 'zh' ? '切换明暗主题' : 'Toggle light and dark theme');
+  languageButton.setAttribute('aria-label', language === 'zh' ? '切换英文' : 'Switch to Chinese');
+  filterGroups.forEach(({ node, label }) => node.setAttribute('aria-label', label[language === 'zh' ? 0 : 1]));
   document.querySelectorAll('nav a').forEach((node, index) => node.textContent = t.nav[index]); setText('#print', t.button); document.querySelector('.lede').innerHTML = `${t.hero[0]}<br><strong>${t.hero[1]}</strong>`; setText('.visual-caption', t.hero[2]); setText('.meta span:nth-child(2)', t.hero[3]); setText('.scroll', t.hero[4]); setText('[data-i18n="proof-gmv"]', language === 'zh' ? '单月直播 GMV' : 'Monthly livestream GMV'); setText('[data-i18n="proof-conversion"]', language === 'zh' ? '单场转化率提升' : 'Per-session conversion lift'); setText('[data-i18n="proof-satisfaction"]', language === 'zh' ? '活动满意度' : 'Event satisfaction'); setText('[data-i18n="results-kicker"]', language === 'zh' ? 'WORK RESULTS / 工作成果' : 'WORK RESULTS / OUTCOMES');
   document.querySelector('.profile h2').innerHTML = `${t.profile[0].replace('\n', '<br>')}`; setText('.profile-grid > div p:nth-child(1)', t.profile[1]); setText('.profile-grid > div p:nth-child(2)', t.profile[2]); document.querySelectorAll('.stats span').forEach((node, index) => node.textContent = t.profile[3][index]);
   document.querySelectorAll('.experience .tabs button').forEach((node, index) => node.textContent = t.exp.tabs[index]); document.querySelectorAll('.portfolio-tabs button').forEach((node, index) => node.textContent = language === 'zh' ? ['全部', '商业', '媒体', '艺术科技'][index] : ['All', 'Commercial', 'Media', 'Arts Tech'][index]); setText('[data-i18n="portfolio-kicker"]', language === 'zh' ? 'PORTFOLIO / 作品集' : 'PORTFOLIO / SELECTED WORK'); document.querySelectorAll('.timeline article').forEach((article, index) => { setText(`.timeline article:nth-child(${index + 1}) label`, t.exp.roles[index]); setText(`.timeline article:nth-child(${index + 1}) .muted`, t.exp.places[index]); setText(`.timeline article:nth-child(${index + 1}) .detail`, t.exp.details[index]); });
@@ -109,11 +131,11 @@ function applyLanguage() {
   ['.edu-grid > div:first-child h3:nth-of-type(1)', '.edu-grid > div:first-child p:nth-of-type(1)', '.edu-grid > div:first-child small:nth-of-type(1)', '.edu-grid > div:first-child h3:nth-of-type(2)', '.edu-grid > div:first-child p:nth-of-type(2)', '.edu-grid > div:first-child small:nth-of-type(2)'].forEach((selector, index) => setText(selector, t.edu[index])); document.querySelectorAll('.awards li').forEach((node, index) => { node.lastChild.textContent = language === 'en' ? englishAwards[index] : chineseAwards[index]; }); const contactTitle = t.contact[0].split('\n'); document.querySelector('.contact h2').innerHTML = `${contactTitle[0]}<br><em>${contactTitle[1]}</em>`; setText('#copy span', t.contact[1]); setText('.contact footer a', t.contact[2]); languageButton.textContent = language === 'zh' ? 'EN' : '中';
 }
 languageButton.addEventListener('click', () => { language = language === 'zh' ? 'en' : 'zh'; applyLanguage(); renderPortfolio(); });
-document.querySelectorAll('.portfolio-tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.portfolio-tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); renderPortfolio(); }));
+document.querySelectorAll('.portfolio-tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.portfolio-tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-pressed', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-pressed', 'true'); renderPortfolio(); }));
 renderPortfolio();
-document.querySelector('#theme').addEventListener('click', () => { body.classList.toggle('dark'); document.querySelector('#theme').textContent = body.classList.contains('dark') ? '☼' : '◐'; }); document.querySelector('#print').addEventListener('click', () => window.print());
+themeButton.addEventListener('click', () => { body.classList.toggle('dark'); themeButton.textContent = body.classList.contains('dark') ? '☼' : '◐'; }); document.querySelector('#print').addEventListener('click', () => window.print());
 const toast = document.querySelector('.toast'); document.querySelector('#copy').addEventListener('click', async () => { try { await navigator.clipboard.writeText('2578157551@qq.com'); } catch { const helper = document.createElement('textarea'); helper.value = '2578157551@qq.com'; helper.style.position = 'fixed'; helper.style.opacity = '0'; document.body.appendChild(helper); helper.select(); document.execCommand('copy'); helper.remove(); } toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1800); });
-document.querySelectorAll('.plus').forEach(button => { const article = button.closest('article'); const detail = article.querySelector('.detail'); detail.hidden = true; button.setAttribute('aria-expanded', 'false'); button.addEventListener('click', () => { const open = article.classList.toggle('open'); detail.hidden = !open; button.setAttribute('aria-expanded', open); button.setAttribute('aria-label', open ? '收起详情' : '展开详情'); button.textContent = open ? '−' : '+'; }); }); document.querySelectorAll('.experience .tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.experience .tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); const filter = tab.dataset.filter; document.querySelectorAll('.timeline article').forEach(item => item.classList.toggle('hidden', filter !== 'all' && item.dataset.type !== filter)); }));
+document.querySelectorAll('.plus').forEach(button => { const article = button.closest('article'); const detail = article.querySelector('.detail'); detail.hidden = true; button.setAttribute('aria-expanded', 'false'); button.addEventListener('click', () => { const open = article.classList.toggle('open'); detail.hidden = !open; button.setAttribute('aria-expanded', open); button.setAttribute('aria-label', open ? '收起详情' : '展开详情'); button.textContent = open ? '−' : '+'; }); }); document.querySelectorAll('.experience .tabs button').forEach(tab => tab.addEventListener('click', () => { document.querySelectorAll('.experience .tabs button').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-pressed', 'false'); }); tab.classList.add('active'); tab.setAttribute('aria-pressed', 'true'); const filter = tab.dataset.filter; document.querySelectorAll('.timeline article').forEach(item => item.classList.toggle('hidden', filter !== 'all' && item.dataset.type !== filter)); }));
 
 const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
 const revealObserver = new IntersectionObserver((entries) => {
