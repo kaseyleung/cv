@@ -241,6 +241,7 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 .research-copy h1 em { color: #777d6d; font-style: normal; }
 .research-deck { margin-top: 24px; color: #55594f; font-size: 17px; line-height: 1.9; }
 .research-caption { position: absolute; z-index: 2; right: max(7vw, calc((100vw - 1240px) / 2)); bottom: 132px; display: grid; gap: 5px; min-width: 190px; pointer-events: none; }
+.hosting-stage .research-caption { padding: 12px 14px; border: 1px solid rgb(38 41 35 / 14%); border-radius: 3px; background: rgb(243 241 233 / 58%); backdrop-filter: blur(12px); }
 .research-caption-index { color: #777d6d; }
 .research-caption strong { color: #262923; font: 600 20px var(--font-display); }
 .research-caption > span:last-child { color: #62685c; font-size: 13px; }
@@ -264,10 +265,10 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 }
 @media (max-width: 600px) {
   .research-stage { height: calc(100svh - 124px); min-height: 690px; margin-top: 124px; }
-  .research-copy { top: 8%; left: 24px; width: calc(100% - 48px); }
+  .research-copy { top: 5%; left: 24px; width: calc(100% - 48px); }
   .research-eyebrow { margin-bottom: 18px; font-size: 10px; }
-  .research-copy h1 { font-size: 48px; line-height: 1.08; }
-  .research-deck { margin-top: 14px; font-size: 14px; }
+  .research-copy h1 { font-size: 44px; line-height: 1.08; }
+  .research-deck { margin-top: 10px; font-size: 13px; }
   .research-caption { right: 24px; bottom: 124px; min-width: 150px; }
   .research-caption strong { font-size: 17px; }
   .research-controls { right: 16px; bottom: 32px; left: 16px; justify-content: space-between; gap: 0; }
