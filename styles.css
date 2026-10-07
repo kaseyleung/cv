@@ -233,6 +233,10 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 .research-main { min-height: 100svh; }
 .research-stage { position: relative; isolation: isolate; height: calc(100svh - 72px); min-height: 620px; margin-top: 72px; overflow: hidden; background: linear-gradient(112deg, #f3f1e9 0%, #ede9df 48%, #dce1d7 100%); }
 #research-canvas { position: absolute; z-index: 0; inset: 0; display: block; width: 100%; height: 100%; }
+.campus-stage::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgb(243 241 233 / 72%) 0%, rgb(243 241 233 / 42%) 30%, transparent 62%); content: ''; pointer-events: none; }
+.campus-stage .research-copy { top: 8%; width: min(390px, 34vw); }
+.campus-stage .research-copy h1 { font-size: 64px; line-height: 1.04; }
+.campus-stage { background: linear-gradient(118deg, #f3f1e9 0%, #e7ebe3 54%, #dce4dd 100%); }
 .commerce-stage::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgb(243 241 233 / 16%) 0%, rgb(243 241 233 / 6%) 34%, transparent 68%); content: ''; pointer-events: none; }
 .research-copy { position: absolute; z-index: 2; top: 13%; left: max(6vw, calc((100vw - 1240px) / 2)); width: min(440px, 38vw); pointer-events: none; }
 .research-eyebrow, .research-caption-index, .research-hint { color: #62685c; font: 12px/1.5 var(--font-label); letter-spacing: .08em; }
@@ -243,6 +247,15 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 .research-deck { margin-top: 24px; color: #55594f; font-size: 17px; line-height: 1.9; }
 .research-caption { position: absolute; z-index: 2; right: max(7vw, calc((100vw - 1240px) / 2)); bottom: 132px; display: grid; gap: 5px; min-width: 190px; pointer-events: none; }
 .hosting-stage .research-caption, .commerce-stage .research-caption { padding: 12px 14px; border: 1px solid rgb(38 41 35 / 14%); border-radius: 3px; background: rgb(243 241 233 / 58%); backdrop-filter: blur(12px); }
+.campus-stage::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgb(243 241 233 / 30%) 0%, rgb(243 241 233 / 12%) 36%, transparent 68%); content: ''; pointer-events: none; }
+.campus-stage .research-caption { bottom: 172px; min-width: 220px; padding: 12px 14px; border: 1px solid rgb(38 41 35 / 14%); border-radius: 3px; background: rgb(243 241 233 / 62%); backdrop-filter: blur(12px); }
+.campus-news-pager { display: flex; align-items: center; gap: 8px; margin-top: 4px; color: #68746b; font: 11px var(--font-label); pointer-events: auto; }
+.campus-news-pager button { display: grid; width: 30px; height: 30px; place-items: center; padding: 0; border: 1px solid rgb(38 41 35 / 22%); border-radius: 2px; color: #34382f; background: rgb(243 241 233 / 60%); font: 17px/1 var(--font-label); cursor: pointer; }
+.campus-news-pager button:hover { color: #f3f1e9; background: #30342e; }
+.campus-news-pager .phone-zoom-toggle { width: auto; padding-inline: 9px; font: 11px var(--font-label); }
+.campus-news-pager .phone-zoom-toggle[aria-pressed="true"] { color: #f3f1e9; background: #30342e; }
+.campus-news-pager button:focus-visible { outline: 2px dashed var(--color-accent); outline-offset: 2px; }
+.campus-news-title { color: #62685c; font-size: 12px; }
 .research-caption-index { color: #777d6d; }
 .research-caption strong { color: #262923; font: 600 20px var(--font-display); }
 .research-caption > span:last-child { color: #62685c; font-size: 13px; }
@@ -264,18 +277,25 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
   .research-stage { min-height: 680px; }
   .research-copy { top: 10%; left: 7vw; width: 48vw; }
   .research-copy h1 { font-size: 62px; }
+  .campus-stage .research-copy { width: 44vw; }
+  .campus-stage .research-copy h1 { font-size: 56px; }
   .research-caption { right: 7vw; bottom: 122px; }
   .research-controls { bottom: 38px; left: 7vw; }
   .research-hint { right: 7vw; bottom: 50px; }
 }
 @media (max-width: 600px) {
   .research-stage { height: calc(100svh - 124px); min-height: 690px; margin-top: 124px; }
+  .campus-stage::before { background: linear-gradient(180deg, rgb(243 241 233 / 38%) 0%, rgb(243 241 233 / 18%) 30%, transparent 64%); }
   .commerce-stage::before { background: linear-gradient(180deg, rgb(243 241 233 / 28%) 0%, rgb(243 241 233 / 12%) 28%, transparent 62%); }
+  .campus-stage::before { background: linear-gradient(180deg, rgb(243 241 233 / 80%) 0%, rgb(243 241 233 / 48%) 30%, transparent 68%); }
   .research-copy { top: 5%; left: 24px; width: calc(100% - 48px); }
+  .campus-stage .research-copy { top: 4%; width: calc(100% - 48px); }
   .research-eyebrow { margin-bottom: 18px; font-size: 10px; }
   .research-copy h1 { font-size: 44px; line-height: 1.08; }
+  .campus-stage .research-copy h1 { font-size: 40px; }
   .research-deck { margin-top: 10px; font-size: 13px; }
   .research-caption { right: 24px; bottom: 124px; min-width: 150px; }
+  .campus-stage .research-caption { right: 16px; bottom: 300px; min-width: 194px; max-width: calc(100% - 32px); }
   .commerce-stage .research-caption { bottom: 154px; }
   .research-caption strong { font-size: 17px; }
   .research-controls { right: 16px; bottom: 32px; left: 16px; justify-content: space-between; gap: 0; }

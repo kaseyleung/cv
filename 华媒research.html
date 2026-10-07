@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="华媒青年报热点内容系统作品记录"><title>华媒青年报 · Kasey 梁幸琪</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;600;800&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.174.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.174.0/examples/jsm/"}}</script>
+<script type="module" src="media-research.js"></script>
+</head>
+<body>
+<header><a class="brand" href="index.html#top">K<span>.</span></a><nav aria-label="主要导航"><a href="index.html#profile">简介</a><a href="index.html#experience">经历</a><a href="index.html#portfolio">作品集</a><a href="index.html#capabilities">能力</a></nav><div class="actions"><a id="print" href="index.html#portfolio">返回作品集 ↗</a></div></header>
+<main id="main-content" class="research-main">
+	<section class="research-stage campus-stage" aria-label="华媒青年报校园采访与摄影现场">
+		<canvas id="research-canvas" aria-label="可旋转校园场景；点击手机屏幕放大电子报，再次点击还原"></canvas>
+		<div class="research-copy">
+			<p class="research-eyebrow"><span></span> HUAMEI / CAMPUS DAILY / 2024</p>
+			<h1>记录校园<br><em>正在发生</em></h1>
+			<p class="research-deck">一个提问，一次回应，一帧现场。<br>让校园里的真实声音被看见。</p>
+		</div>
+		<div class="research-caption" aria-live="polite">
+			<span class="research-caption-index" id="focus-index">01 / 03</span>
+			<strong id="focus-title">校园新闻现场</strong>
+			<span id="focus-description">采访 · 记录 · 传播</span>
+			<div class="campus-news-pager" role="group" aria-label="翻阅电子报">
+				<button id="news-prev" type="button" aria-label="上一则新闻">←</button>
+				<span id="news-page-count">01 / 03</span>
+				<button id="news-next" type="button" aria-label="下一则新闻">→</button>
+				<button id="phone-zoom-toggle" class="phone-zoom-toggle" type="button" aria-pressed="false">放大内容</button>
+			</div>
+			<span id="news-page-title" class="campus-news-title">左右滑动手机阅读电子报</span>
+		</div>
+		<div class="research-controls" role="group" aria-label="选择校园报道视角">
+			<button type="button" data-focus="all" aria-pressed="true">全景</button>
+			<button type="button" data-focus="interview" aria-pressed="false">采访</button>
+			<button type="button" data-focus="shooting" aria-pressed="false">报纸拍摄</button>
+		</div>
+		<p class="research-hint"><span>DRAG</span> 旋转校园 <i></i> <span>SCROLL</span> 调整距离</p>
+		<p class="research-status" id="research-status" role="status">正在搭建校园现场…</p>
+	</section>
+</main>
+<section class="contact"><div class="wrap"><label>07 / LET'S CONNECT</label><h2>让下一段经历<br><em>从一句你好开始。</em></h2><a class="contact-email" href="mailto:2578157551@qq.com">2578157551@qq.com <span>发送邮件 ↗</span></a><footer><span>Hong Kong / Shenzhen</span><span>© 2026 Kasey Liang</span><a href="index.html#top">回到顶部 ↑</a></footer></div></section>
+</body>
+</html>
