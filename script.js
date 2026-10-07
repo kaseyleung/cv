@@ -100,6 +100,7 @@ const data = {
 function setText(selector, text) { const node = document.querySelector(selector); if (node) node.textContent = text; }
 data.zh.nav = ['简介', '经历', '作品集', '能力']; data.en.nav = ['Profile', 'Experience', 'Portfolio', 'Capabilities'];
 data.zh.button = '打印 / 保存 CV ↗'; data.en.button = 'Print / Save CV ↗';
+data.zh.contact[1] = '↗'; data.en.contact[1] = '↗';
 setText('#print', data.zh.button);
 const portfolioIndex = document.querySelector('.portfolio .index');
 if (portfolioIndex?.firstChild) portfolioIndex.firstChild.textContent = '06 ';

@@ -228,6 +228,9 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 .contact { padding-block: clamp(72px, 12vw, 160px); color: #000; background: var(--color-accent); }
 .contact label, .contact h2, .contact em { color: #000; }
 .contact button, .contact-email { display: inline-block; padding: 12px 0; color: #000; border: 0; border-bottom: 1px dashed #000; font-size: 17px; }
+.contact button#copy { padding-inline: 12px; background: rgb(243 241 233 / 26%); transition: background .2s ease; }
+.contact button#copy:hover { background: rgb(243 241 233 / 38%); }
+.contact #copy span { margin-left: 12px; font: 14px var(--font-label); }
 .contact-email span { margin-left: 12px; font: 14px var(--font-label); }
 .contact footer { display: flex; justify-content: space-between; gap: 20px; margin-top: 90px; padding-top: 20px; border-top: 1px dashed #000; color: #000; font: 15px var(--font-label); }
 .research-main { min-height: 100svh; }
