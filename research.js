@@ -111,46 +111,24 @@ stageRing.position.y = 0.29;
 stageDeck.add(stageRing);
 
 const host = new THREE.Group();
-host.position.set(0.16, 0.3, -0.72);
+host.position.set(-1.15, 0.3, -0.72);
 sceneGroup.add(host);
-const hostParts = [];
-const addHostMesh = (geometry, material, position) => {
-  const mesh = addMesh(geometry, material, position, host, 'host');
-  hostParts.push(mesh);
-  return mesh;
-};
-const addHostRod = (from, to, radius, material) => {
-  const rod = addRod(from, to, radius, material, host, 'host');
-  hostParts.push(rod);
-  return rod;
-};
-
-addHostMesh(new THREE.CapsuleGeometry(0.19, 0.58, 5, 12), materials.suit, [0, 1.28, 0]);
-addHostMesh(new THREE.SphereGeometry(0.25, 20, 14), materials.jacket, [0, 1.62, 0]);
-addHostMesh(new THREE.CapsuleGeometry(0.14, 0.48, 4, 10), materials.suit, [-0.14, 0.58, 0]);
-addHostMesh(new THREE.CapsuleGeometry(0.14, 0.48, 4, 10), materials.suit, [0.14, 0.58, 0]);
-addHostMesh(new THREE.BoxGeometry(0.24, 0.11, 0.4), materials.dark, [-0.14, 0.12, 0.06]);
-addHostMesh(new THREE.BoxGeometry(0.24, 0.11, 0.4), materials.dark, [0.14, 0.12, 0.06]);
-addHostMesh(new THREE.SphereGeometry(0.19, 24, 18), materials.skin, [0, 2.03, 0]);
-addHostMesh(new THREE.SphereGeometry(0.198, 24, 16, 0, Math.PI * 2, 0, Math.PI * 0.62), materials.hair, [0, 2.1, -0.015]);
-addHostMesh(new THREE.ConeGeometry(0.042, 0.13, 12), materials.skin, [0, 1.99, 0.18]).rotation.x = Math.PI / 2;
-for (const eyeX of [-0.07, 0.07]) addHostMesh(new THREE.SphereGeometry(0.018, 10, 8), materials.dark, [eyeX, 2.04, 0.174]);
-addHostMesh(new THREE.BoxGeometry(0.12, 0.2, 0.08), materials.coral, [0, 1.43, 0.205]);
-
-for (const side of [-1, 1]) {
-  const shoulder = [side * 0.2, 1.67, 0];
-  const elbow = [side * 0.58, 1.9, 0.015];
-  const wrist = [side * 0.93, 2.1, 0.02];
-  const hand = [side * 1.07, 2.12, 0.035];
-  addHostRod(shoulder, elbow, 0.095, materials.jacket);
-  addHostRod(elbow, wrist, 0.07, materials.jacket);
-  addHostMesh(new THREE.SphereGeometry(0.085, 14, 10), materials.skin, elbow);
-  addHostMesh(new THREE.SphereGeometry(0.07, 14, 10), materials.skin, hand);
-  for (let finger = 0; finger < 4; finger += 1) {
-    const spread = (finger - 1.5) * 0.045;
-    addHostRod([side * 1.09, 2.13 + spread, 0.035], [side * 1.2, 2.17 + spread * 1.5, 0.045], 0.014, materials.skin);
-  }
-}
+const hostTexture = new THREE.TextureLoader().load('host-cutout.png');
+hostTexture.colorSpace = THREE.SRGBColorSpace;
+const hostPortrait = new THREE.Mesh(
+  new THREE.PlaneGeometry(1.18, 2.79),
+  new THREE.MeshBasicMaterial({ map: hostTexture, transparent: true, alphaTest: 0.12, side: THREE.DoubleSide, toneMapped: false, depthWrite: false })
+);
+hostPortrait.position.set(0, 1.395, 0);
+hostPortrait.userData.focusKey = 'host';
+host.add(hostPortrait);
+const hostShadow = new THREE.Mesh(
+  new THREE.CircleGeometry(0.58, 36),
+  new THREE.MeshBasicMaterial({ color: 0x4b554c, transparent: true, opacity: 0.14, depthWrite: false })
+);
+hostShadow.rotation.x = -Math.PI / 2;
+hostShadow.position.set(-1.15, 0.305, -0.72);
+sceneGroup.add(hostShadow);
 
 const microphone = new THREE.Group();
 microphone.position.set(-0.68, 0.3, -0.2);
@@ -169,6 +147,7 @@ for (let line = 0; line < 3; line += 1) {
   microphone.add(grille);
 }
 microphone.traverse((child) => { if (child.isMesh) child.userData.focusKey = 'host'; });
+microphone.visible = false;
 
 const audience = new THREE.Group();
 sceneGroup.add(audience);
@@ -210,7 +189,7 @@ sceneGroup.add(beam);
 
 const views = {
   all: { index: '01 / 03', title: '聚光之下', description: '主持人 · 打开现场的情绪', target: [0, 1.3, 1.1], position: [4.6, 4.1, 9.6] },
-  host: { index: '02 / 03', title: '与现场对话', description: '主持人 · 张开双臂连接每一位来宾', target: [0, 1.45, -0.3], position: [2.5, 2.7, 5.2] },
+  host: { index: '02 / 03', title: '与现场对话', description: '主持人 · 张开双臂连接每一位来宾', target: [-1.15, 1.45, -0.3], position: [1.35, 2.7, 5.2] },
   audience: { index: '03 / 03', title: '回应正在发生', description: '观众席 · 每一次注视都是现场的一部分', target: [0, 0.9, 2.7], position: [0.5, 3.2, 8.4] }
 };
 

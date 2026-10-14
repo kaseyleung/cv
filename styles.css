@@ -250,6 +250,11 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
 .research-deck { margin-top: 24px; color: #55594f; font-size: 17px; line-height: 1.9; }
 .research-caption { position: absolute; z-index: 2; right: max(7vw, calc((100vw - 1240px) / 2)); bottom: 132px; display: grid; gap: 5px; min-width: 190px; pointer-events: none; }
 .hosting-stage .research-caption, .commerce-stage .research-caption { padding: 12px 14px; border: 1px solid rgb(38 41 35 / 14%); border-radius: 3px; background: rgb(243 241 233 / 58%); backdrop-filter: blur(12px); }
+.conference-stage .research-copy { top: 10%; width: min(390px, 32vw); }
+.conference-stage .research-copy h1 { font-size: 64px; }
+.conference-proof { display: flex; align-items: baseline; gap: 12px; margin-top: 24px; color: #62685c; }
+.conference-proof strong { color: #3f5748; font: 600 32px/.95 var(--font-label); }
+.conference-proof span { font: 12px var(--font-label); }
 .campus-stage::before { position: absolute; z-index: 1; inset: 0; background: linear-gradient(90deg, rgb(243 241 233 / 30%) 0%, rgb(243 241 233 / 12%) 36%, transparent 68%); content: ''; pointer-events: none; }
 .campus-stage .research-caption { bottom: 172px; min-width: 220px; padding: 12px 14px; border: 1px solid rgb(38 41 35 / 14%); border-radius: 3px; background: rgb(243 241 233 / 62%); backdrop-filter: blur(12px); }
 .campus-news-pager { display: flex; align-items: center; gap: 8px; margin-top: 4px; color: #68746b; font: 11px var(--font-label); pointer-events: auto; }
@@ -293,10 +298,14 @@ h3 { margin: 0; font: 600 22px/1.15 var(--font-display); }
   .campus-stage::before { background: linear-gradient(180deg, rgb(243 241 233 / 80%) 0%, rgb(243 241 233 / 48%) 30%, transparent 68%); }
   .research-copy { top: 5%; left: 24px; width: calc(100% - 48px); }
   .campus-stage .research-copy { top: 4%; width: calc(100% - 48px); }
+  .conference-stage .research-copy { top: 4%; width: calc(100% - 48px); }
+  .conference-stage .research-copy h1 { font-size: 44px; }
   .research-eyebrow { margin-bottom: 18px; font-size: 10px; }
   .research-copy h1 { font-size: 44px; line-height: 1.08; }
   .campus-stage .research-copy h1 { font-size: 40px; }
   .research-deck { margin-top: 10px; font-size: 13px; }
+  .conference-proof { margin-top: 12px; }
+  .conference-proof strong { font-size: 26px; }
   .research-caption { right: 24px; bottom: 124px; min-width: 150px; }
   .campus-stage .research-caption { right: 16px; bottom: 300px; min-width: 194px; max-width: calc(100% - 32px); }
   .commerce-stage .research-caption { bottom: 154px; }
