@@ -20,7 +20,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog(0xe8e6dc, 13, 25);
+scene.fog = new THREE.Fog(0xf7f2e8, 12, 24);
 
 const camera = new THREE.PerspectiveCamera(36, stage.clientWidth / stage.clientHeight, 0.1, 60);
 camera.position.set(4.6, 4.1, 9.6);
@@ -35,7 +35,7 @@ controls.maxPolarAngle = Math.PI * 0.48;
 controls.target.set(0, 1.25, 1.2);
 controls.update();
 
-scene.add(new THREE.HemisphereLight(0xf7f3e9, 0x666d65, 1.8));
+scene.add(new THREE.HemisphereLight(0xf7f3e9, 0x6b6157, 1.8));
 
 const keyLight = new THREE.DirectionalLight(0xffe8bd, 2.2);
 keyLight.position.set(-4, 7, 5);
@@ -48,24 +48,24 @@ keyLight.shadow.camera.bottom = -6;
 keyLight.shadow.bias = -0.0003;
 scene.add(keyLight);
 
-const rimLight = new THREE.DirectionalLight(0xc9d8cc, 1.6);
+const rimLight = new THREE.DirectionalLight(0xdcc9b6, 1.6);
 rimLight.position.set(5, 4, -4);
 scene.add(rimLight);
 
 const materials = {
-  glass: new THREE.MeshPhysicalMaterial({ color: 0xd9e4dc, transparent: true, opacity: 0.24, roughness: 0.12, metalness: 0.14, transmission: 0.42, thickness: 0.22, clearcoat: 0.8, clearcoatRoughness: 0.12, depthWrite: false }),
-  glassEdge: new THREE.MeshStandardMaterial({ color: 0xa8b8ad, metalness: 0.66, roughness: 0.22 }),
-  suit: new THREE.MeshPhysicalMaterial({ color: 0x556c62, roughness: 0.28, metalness: 0.12, clearcoat: 0.55, clearcoatRoughness: 0.2 }),
-  jacket: new THREE.MeshPhysicalMaterial({ color: 0xb5c8bb, transparent: true, opacity: 0.76, roughness: 0.25, metalness: 0.12, clearcoat: 0.9 }),
+  glass: new THREE.MeshPhysicalMaterial({ color: 0xe9ddca, transparent: true, opacity: 0.24, roughness: 0.12, metalness: 0.14, transmission: 0.42, thickness: 0.22, clearcoat: 0.8, clearcoatRoughness: 0.12, depthWrite: false }),
+  glassEdge: new THREE.MeshStandardMaterial({ color: 0xbfa98f, metalness: 0.66, roughness: 0.22 }),
+  suit: new THREE.MeshPhysicalMaterial({ color: 0x6b5a48, roughness: 0.28, metalness: 0.12, clearcoat: 0.55, clearcoatRoughness: 0.2 }),
+  jacket: new THREE.MeshPhysicalMaterial({ color: 0xd8c6b0, transparent: true, opacity: 0.76, roughness: 0.25, metalness: 0.12, clearcoat: 0.9 }),
   skin: new THREE.MeshStandardMaterial({ color: 0xd9ad8e, roughness: 0.65 }),
   hair: new THREE.MeshStandardMaterial({ color: 0x302d29, roughness: 0.78 }),
   dark: new THREE.MeshStandardMaterial({ color: 0x292d29, metalness: 0.56, roughness: 0.28 }),
-  steel: new THREE.MeshStandardMaterial({ color: 0xaeb8ae, metalness: 0.78, roughness: 0.2 }),
+  steel: new THREE.MeshStandardMaterial({ color: 0xb8ada0, metalness: 0.78, roughness: 0.2 }),
   coral: new THREE.MeshStandardMaterial({ color: 0xd97859, metalness: 0.28, roughness: 0.32 }),
   spotlight: new THREE.MeshBasicMaterial({ color: 0xffedc9, transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false }),
-  floor: new THREE.MeshStandardMaterial({ color: 0xd5d7cd, roughness: 0.72, metalness: 0.04 }),
-  audience: new THREE.MeshPhysicalMaterial({ color: 0x899c91, transparent: true, opacity: 0.56, roughness: 0.22, metalness: 0.2, clearcoat: 0.7 }),
-  audienceWarm: new THREE.MeshPhysicalMaterial({ color: 0xd3aa8b, transparent: true, opacity: 0.58, roughness: 0.3, metalness: 0.1 })
+  floor: new THREE.MeshStandardMaterial({ color: 0xf3ecdf, roughness: 0.92, metalness: 0.02 }),
+  audience: new THREE.MeshPhysicalMaterial({ color: 0xb9a488, transparent: true, opacity: 0.5, roughness: 0.22, metalness: 0.2, clearcoat: 0.7 }),
+  audienceWarm: new THREE.MeshPhysicalMaterial({ color: 0xd9b394, transparent: true, opacity: 0.55, roughness: 0.3, metalness: 0.1 })
 };
 
 const sceneGroup = new THREE.Group();
@@ -113,18 +113,101 @@ stageDeck.add(stageRing);
 const host = new THREE.Group();
 host.position.set(-1.15, 0.3, -0.72);
 sceneGroup.add(host);
-const hostTexture = new THREE.TextureLoader().load('host-cutout.png');
-hostTexture.colorSpace = THREE.SRGBColorSpace;
-const hostPortrait = new THREE.Mesh(
-  new THREE.PlaneGeometry(1.18, 2.79),
-  new THREE.MeshBasicMaterial({ map: hostTexture, transparent: true, alphaTest: 0.12, side: THREE.DoubleSide, toneMapped: false, depthWrite: false })
-);
-hostPortrait.position.set(0, 1.395, 0);
-hostPortrait.userData.focusKey = 'host';
-host.add(hostPortrait);
+// cute host: same primitive language as the audience, terracotta gown
+const mascot = new THREE.Group();
+mascot.rotation.y = 0.52;
+host.add(mascot);
+const mascotTone = {
+  dress: new THREE.MeshStandardMaterial({ color: 0xb4653f, roughness: 0.58, metalness: 0.03 }),
+  shade: new THREE.MeshStandardMaterial({ color: 0x95502f, roughness: 0.62, metalness: 0.03 }),
+  skin: new THREE.MeshStandardMaterial({ color: 0xe8bd9b, roughness: 0.72 }),
+  hair: new THREE.MeshStandardMaterial({ color: 0x3b2a22, roughness: 0.8 }),
+  blush: new THREE.MeshStandardMaterial({ color: 0xe39a7c, roughness: 0.85 }),
+  ink: new THREE.MeshStandardMaterial({ color: 0x2a211c, roughness: 0.5 })
+};
+
+const gown = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.45, 0.98, 28), mascotTone.dress);
+gown.position.y = 0.53;
+mascot.add(gown);
+const hem = new THREE.Mesh(new THREE.TorusGeometry(0.44, 0.024, 6, 28), mascotTone.shade);
+hem.rotation.x = Math.PI / 2;
+hem.position.y = 0.05;
+mascot.add(hem);
+
+const torso = new THREE.Mesh(new THREE.CapsuleGeometry(0.19, 0.3, 4, 16), mascotTone.dress);
+torso.position.y = 1.17;
+mascot.add(torso);
+const collar = new THREE.Mesh(new THREE.TorusGeometry(0.15, 0.02, 6, 22), mascotTone.shade);
+collar.rotation.x = Math.PI / 2;
+collar.position.y = 1.35;
+mascot.add(collar);
+
+const head = new THREE.Mesh(new THREE.SphereGeometry(0.21, 24, 18), mascotTone.skin);
+head.position.y = 1.56;
+mascot.add(head);
+
+const hair = new THREE.Mesh(new THREE.SphereGeometry(0.236, 24, 18), mascotTone.hair);
+hair.position.set(0, 1.575, -0.052);
+mascot.add(hair);
+const bun = new THREE.Mesh(new THREE.SphereGeometry(0.088, 16, 12), mascotTone.hair);
+bun.position.set(0, 1.63, -0.205);
+mascot.add(bun);
+const bangs = new THREE.Mesh(new THREE.SphereGeometry(0.17, 18, 12), mascotTone.hair);
+bangs.position.set(0, 1.69, 0.075);
+bangs.scale.set(1.15, 0.52, 0.72);
+mascot.add(bangs);
+
+[-0.075, 0.075].forEach((x) => {
+  const eye = new THREE.Mesh(new THREE.SphereGeometry(0.027, 12, 10), mascotTone.ink);
+  eye.position.set(x, 1.575, 0.19);
+  mascot.add(eye);
+});
+[-0.128, 0.128].forEach((x) => {
+  const blush = new THREE.Mesh(new THREE.CircleGeometry(0.042, 16), mascotTone.blush);
+  blush.position.set(x, 1.5, 0.166);
+  blush.rotation.y = x * 2.6;
+  mascot.add(blush);
+});
+const smile = new THREE.Mesh(new THREE.TorusGeometry(0.052, 0.01, 6, 18, Math.PI), mascotTone.ink);
+smile.position.set(0, 1.495, 0.198);
+smile.rotation.z = Math.PI;
+mascot.add(smile);
+
+const armGeo = new THREE.CapsuleGeometry(0.06, 0.29, 4, 12);
+const leftArm = new THREE.Mesh(armGeo, mascotTone.dress);
+leftArm.position.set(-0.245, 1.07, 0.02);
+leftArm.rotation.z = 0.14;
+mascot.add(leftArm);
+
+const waveArm = new THREE.Mesh(armGeo, mascotTone.dress);
+waveArm.position.set(0.27, 1.45, 0.02);
+waveArm.rotation.z = -0.55;
+mascot.add(waveArm);
+const hand = new THREE.Mesh(new THREE.SphereGeometry(0.052, 14, 10), mascotTone.skin);
+hand.position.set(0.36, 1.6, 0.02);
+mascot.add(hand);
+
+const handMic = new THREE.Group();
+handMic.position.set(-0.31, 0.95, 0.16);
+handMic.rotation.z = 0.22;
+const micHandle = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.024, 0.16, 10), mascotTone.ink);
+micHandle.position.y = 0.01;
+handMic.add(micHandle);
+const micTop = new THREE.Mesh(new THREE.SphereGeometry(0.052, 12, 10), materials.steel);
+micTop.position.y = 0.1;
+micTop.scale.y = 0.78;
+handMic.add(micTop);
+mascot.add(handMic);
+
+mascot.traverse((child) => {
+  if (!child.isMesh) return;
+  child.castShadow = true;
+  child.receiveShadow = true;
+  child.userData.focusKey = 'host';
+});
 const hostShadow = new THREE.Mesh(
   new THREE.CircleGeometry(0.58, 36),
-  new THREE.MeshBasicMaterial({ color: 0x4b554c, transparent: true, opacity: 0.14, depthWrite: false })
+  new THREE.MeshBasicMaterial({ color: 0x7a5a44, transparent: true, opacity: 0.16, depthWrite: false })
 );
 hostShadow.rotation.x = -Math.PI / 2;
 hostShadow.position.set(-1.15, 0.305, -0.72);
@@ -189,7 +272,7 @@ sceneGroup.add(beam);
 
 const views = {
   all: { index: '01 / 03', title: '聚光之下', description: '主持人 · 打开现场的情绪', target: [0, 1.3, 1.1], position: [4.6, 4.1, 9.6] },
-  host: { index: '02 / 03', title: '与现场对话', description: '主持人 · 张开双臂连接每一位来宾', target: [-1.15, 1.45, -0.3], position: [1.35, 2.7, 5.2] },
+  host: { index: '02 / 03', title: '与现场对话', description: '主持人 · 一手麦克风，一手向你挥手', target: [-1.15, 1.45, -0.3], position: [1.35, 2.7, 5.2] },
   audience: { index: '03 / 03', title: '回应正在发生', description: '观众席 · 每一次注视都是现场的一部分', target: [0, 0.9, 2.7], position: [0.5, 3.2, 8.4] }
 };
 
@@ -252,6 +335,7 @@ const clock = new THREE.Clock();
 const animate = () => {
   const elapsed = clock.getElapsedTime();
   host.rotation.y = reducedMotion.matches ? 0 : Math.sin(elapsed * 0.4) * 0.025;
+  if (!reducedMotion.matches) waveArm.rotation.z = -0.55 + Math.sin(elapsed * 2.2) * 0.13;
   controls.update();
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
