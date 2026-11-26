@@ -120,7 +120,7 @@ function renderPortfolio() {
 const englishAwards = ['Excellence Award, National College Student Advertising Art Competition (Maker Marketing Category)', '2nd Prize, China University Student Computer Design Competition (Central-South Region)', '2nd Prize, Lei Feng Cup Recitation Competition', '3rd Prize, Hubei Province Translation Competition', '3rd Prize, Hope Star English Talent Competition (City Speech)', '2nd Prize, FLTRP · Guocai Cup English Speaking Competition', '3rd Prize, FLTRP · Guocai Cup National Reading Competition', '1st Prize, Tell Hometown Stories in English Competition', '2nd Prize, Youth in Volunteer Stories Speech Competition', '2nd Prize, FLTRP · Guocai Cup National English Speech Competition'];
 const chineseAwards = Array.from(document.querySelectorAll('.awards li')).map(node => node.lastChild.textContent);
 function applyLanguage() {
-  const t = data[language]; document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'; document.title = language === 'zh' ? 'Kasey 梁幸琪 · Interactive CV' : 'Kasey Liang · Interactive CV';
+  const t = data[language]; document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'; document.title = language === 'zh' ? 'Kasey 梁幸琪 · Interactive CV' : 'Kasey Leung · Interactive CV';
   navigation?.setAttribute('aria-label', language === 'zh' ? '主要导航' : 'Main navigation');
   themeButton?.setAttribute('aria-label', language === 'zh' ? '切换明暗主题' : 'Toggle light and dark theme');
   languageButton.setAttribute('aria-label', language === 'zh' ? '切换英文' : 'Switch to Chinese');
