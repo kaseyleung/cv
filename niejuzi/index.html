@@ -1593,6 +1593,8 @@ body.reduce-motion .stage-splatter.is-active { animation: none; }
   .mobile-dock {
     display: flex;
     flex: 1;
+    width: 100%;
+    align-self: stretch;
     min-height: 104px;
     flex-direction: column;
     justify-content: center;
@@ -4140,6 +4142,7 @@ body.reduce-motion .stage-splatter.is-active { animation: none; }
       });
     }
     run.splashes.push({ x, y, age: 0, life: reduced ? 0.22 : 0.36, size: reduced ? 300 : 720, rot: rand(-0.22, 0.22) });
+    if (run.splashes.length > 8) run.splashes.splice(0, run.splashes.length - 8);
     run.rings.push({ x, y, age: 0, life: 0.5, startR: 22, endR: 190, color: 'rgba(255, 220, 172, 0.78)', width: 7 });
     run.rings.push({ x, y, age: 0.035, life: 0.44, startR: 16, endR: 260, color: 'rgba(185, 91, 37, 0.48)', width: 3 });
     run.bursts.push({ x, y, age: 0, life: 0.46, size: reduced ? 250 : 470, rotation: rand(-0.18, 0.18) });
