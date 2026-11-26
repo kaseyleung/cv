@@ -327,9 +327,14 @@ requestAnimationFrame(() => document.body.classList.add('page-ready'));
     wrap.classList.remove('model-failed');
     wrap.classList.add('model-ready');
   };
+  var heroTimer;
+  var heroFailed = function () { if (!viewer.loaded) wrap.classList.add('model-failed'); };
   viewer.addEventListener('load', markReady);
-  viewer.addEventListener('error', () => { if (!viewer.loaded) wrap.classList.add('model-failed'); });
-  setTimeout(() => { if (!viewer.loaded) wrap.classList.add('model-failed'); }, 8000);
+  viewer.addEventListener('error', heroFailed);
+  viewer.addEventListener('loadstart', function () {
+    clearTimeout(heroTimer);
+    heroTimer = setTimeout(heroFailed, 12000);
+  });
 })();
 
 
@@ -473,5 +478,27 @@ requestAnimationFrame(() => document.body.classList.add('page-ready'));
   hint.className = 'file-hint';
   hint.innerHTML = '3D 需本地服务器预览 · 双击 <code>serve.command</code>';
   visual.appendChild(hint);
+})();
+
+
+
+/* ---------- capability model: graceful fallback ---------- */
+(function () {
+  document.querySelectorAll('.cap-feature model-viewer').forEach(function (viewer) {
+    var figure = viewer.closest('.cap-feature');
+    if (!figure) return;
+    var ready = function () {
+      figure.classList.remove('model-failed');
+      figure.classList.add('is-loaded');
+    };
+    var capTimer;
+    var capFailed = function () { if (!viewer.loaded) figure.classList.add('model-failed'); };
+    viewer.addEventListener('load', ready);
+    viewer.addEventListener('error', capFailed);
+    viewer.addEventListener('loadstart', function () {
+      clearTimeout(capTimer);
+      capTimer = setTimeout(capFailed, 15000);
+    });
+  });
 })();
 

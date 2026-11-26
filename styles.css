@@ -1308,3 +1308,15 @@ nav a:hover, nav a.is-current { background: color-mix(in srgb, var(--color-accen
 .model-slot-label small { opacity: .6; }
 .hero-model-placeholder.model-ready .model-slot-label { display: none; }
 
+
+.cap-feature.model-failed::after {
+  content: "3D 模型未能加载 · 建议用本地服务器打开";
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  padding: 20px;
+  color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+  font: 600 12px/1.6 var(--font-body);
+  text-align: center;
+}
+.cap-feature.model-failed model-viewer { opacity: .12; }
+
