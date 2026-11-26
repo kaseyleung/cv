@@ -1,8 +1,10 @@
 # 捏橘子 · NIE JUZI
 
+**公开试玩：** https://kaseyleung.github.io/cv/niejuzi/
+
 90 秒体感反应小游戏：捏住橘子，避开榴莲。
 
-**在线试玩：** https://kaseyleung.github.io/niejuzi/
+**在线试玩：** https://kaseyleung.github.io/cv/niejuzi/
 
 - 鼠标 / 触控：按下即捏合
 - 摄像头模式：双手拇指与食指捏合（需授权；画面只在本地处理）
