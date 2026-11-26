@@ -104,3 +104,11 @@ macOS 也可以直接双击 `serve.command`，会自动起服务并打开浏览�
 - 3D 模型未加载（如 `file://` 环境）时，点击会提示「3D 模型需要在本地服务器下预览」，并保持人像状态
 - 人像状态隐藏轨道装饰与「跨越艺术现场」角标，只保留「ON STAGE / 主持现场」
 
+
+## 3D 模型看不到？两个原因
+
+1. **不要用 `file://` 直接打开**：浏览器会拦截本地 `.glb` 的 fetch 和 ES module，`<model-viewer>` 无法工作。请双击 `serve.command`（或 `python3 -m http.server 8000`），访问 `http://localhost:8000/index.html`。
+2. **原来的 model-viewer 走 Google CDN**（`ajax.googleapis.com`），国内网络经常超时，导致自定义元素根本没注册。现在已改为本地文件 `vendor/model-viewer.min.js`，不依赖外网。
+
+补充：首屏 3D 模型 `tv3d.glb` 有 27MB，首次加载需要几秒；8 秒内没加载完会先显示人像，加载完成后自动切回 3D（不会再卡在人像）。人像状态下点右上角 `BACK TO 3D` 可手动切回。
+

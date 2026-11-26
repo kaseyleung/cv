@@ -1286,3 +1286,25 @@ nav a:hover, nav a.is-current { background: color-mix(in srgb, var(--color-accen
 .visual.show-portrait .model-caption { display: block; }
 .visual.show-portrait .visual-caption { display: none; }
 
+
+.file-hint {
+  position: absolute;
+  z-index: 3;
+  left: 16px;
+  bottom: 46px;
+  margin: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-edge);
+  background: var(--glass-strong);
+  color: color-mix(in srgb, var(--color-ink) 72%, transparent);
+  font: 600 11px/1.4 var(--font-body);
+  backdrop-filter: blur(10px);
+}
+.file-hint code { font: 700 10px/1 var(--font-label); color: var(--color-accent); }
+
+
+.model-slot-label { color: color-mix(in srgb, var(--color-ink) 45%, transparent); }
+.model-slot-label small { opacity: .6; }
+.hero-model-placeholder.model-ready .model-slot-label { display: none; }
+

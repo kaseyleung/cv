@@ -322,9 +322,14 @@ requestAnimationFrame(() => document.body.classList.add('page-ready'));
   const wrap = viewer?.closest('.hero-model-placeholder');
   if (!viewer || !wrap) return;
   let loaded = false;
-  viewer.addEventListener('load', () => { loaded = true; wrap.classList.add('model-ready'); });
-  viewer.addEventListener('error', () => wrap.classList.add('model-failed'));
-  setTimeout(() => { if (!loaded) wrap.classList.add('model-failed'); }, 5500);
+  const markReady = () => {
+    loaded = true;
+    wrap.classList.remove('model-failed');
+    wrap.classList.add('model-ready');
+  };
+  viewer.addEventListener('load', markReady);
+  viewer.addEventListener('error', () => { if (!viewer.loaded) wrap.classList.add('model-failed'); });
+  setTimeout(() => { if (!viewer.loaded) wrap.classList.add('model-failed'); }, 8000);
 })();
 
 
@@ -455,5 +460,18 @@ requestAnimationFrame(() => document.body.classList.add('page-ready'));
       }, 30);
     }, 170);
   });
+})();
+
+
+
+/* ---------- file:// hint: 3D needs a local server ---------- */
+(function () {
+  if (location.protocol !== 'file:') return;
+  var visual = document.querySelector('.visual');
+  if (!visual || visual.querySelector('.file-hint')) return;
+  var hint = document.createElement('p');
+  hint.className = 'file-hint';
+  hint.innerHTML = '3D 需本地服务器预览 · 双击 <code>serve.command</code>';
+  visual.appendChild(hint);
 })();
 
